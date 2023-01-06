@@ -11,7 +11,6 @@ const ChatLastestStatus = (props: ChatLastestStatusType): JSX.Element => {
   return (
     <Box sx={{ display: "flex", justifyContent: "space-between" }}>
       <Typography>{message}</Typography>
-      <Chip color="error" label={count} />
     </Box>
   );
 };

@@ -20,17 +20,18 @@ const Login = (): JSX.Element => {
     };
 
     const addUser = async () => {
-        try {
-            await axios.post("http://localhost:8080/login", { id: id, password: pass });
-            window.location.href = '/Main?id=' + id;
-        }catch (e) {
-            if (axios.isAxiosError(e) && e.response) {
-              const { data } = e.response;
-              if (data) {
-                alert(data.message);
-              }
-            }
+  
+      try {
+        await axios.post("http://localhost:8080/login", { id: id, password: pass });
+        window.location.href = '/Main?id=' + id;
+     }catch (e) {
+        if (axios.isAxiosError(e) && e.response) {
+          const { data } = e.response;
+          if (data) {
+            alert(data.message);
           }
+        }
+      }
     };
 
     const SignUp = () => {

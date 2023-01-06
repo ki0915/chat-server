@@ -8,23 +8,29 @@ import {
   Model,
   PrimaryKey,
   Table,
+  AllowNull,
 } from "sequelize-typescript";
 import User from "./user.model";
-import Chat from "./chat.model";
 
 @Table
 export default class Message extends Model {
   @PrimaryKey
-  @Column(DataType.STRING(20))
-  id: string;
+  @AutoIncrement
+  @Column(DataType.BIGINT)
+  id: number;
 
   @Column
   @ForeignKey(() => User)
   senderId: string;
 
   @Column
-  @ForeignKey(() => Chat)
-  chatId: string;
+  chatId: bigint;
+
+  @Column
+  roomId: string;
+
+  @Column
+  addressId: string;
 
   @Column(DataType.STRING(2048))
   message: string;

@@ -18,54 +18,43 @@ import axios from "axios";
 import ImageIcon from "@mui/icons-material/Image";
 import ChatTitle from "./chatTitle";
 import ChatLastestStatus from "./ChatLastestStatus";
-/*
+
 type ChatType = {
-  id: number;
-  name: string;
+  id: string;
   message: string;
   date: Date;
-  count?: number;
 };
 
-type ChatSelcetType ={
-  joinChat: (chatId: number) => void;
+type ChatSelcetType = {
+  joinChat: (chatId: string) => void;
 };
 
 
-const ChatList = (props: ChatSelcetType):  JSX.Element => {
-  const { joinChat} = props;
-  const [chatList, setChatList] = useState(chats);
-
-  const loadChatList = async () => {
-    const { data } = await  axios.get<ChatType[]>(
-      "http://localhost:5000/chats",
-      {
-        params: {
-          userId: 1,
-        },
-      }
-    );
-    setChatList(data);
-  };
-
-  useEffect(() => {
-    loadChatList();
-  }, []);
+const ChatList = (props: ChatSelcetType): JSX.Element => {
+  const { joinChat } = props;
 
   return (
     <List>
-    {chatList.map((chat) => {
-      return (
-          <ListItemButton key={chat.id} onClick={() => joinChat(chat.id)}>
+          <ListItemButton onClick={() => joinChat("1")}>
             <ListItemAvatar>
               <Avatar>
                 <ImageIcon />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText primary={<ChatTitle name={chat.name} date={chat.date}/>} secondary={<ChatLastestStatus message={chat.message} count={chat.count}/>} />
+            <ListItemText primary={<ChatTitle id={"1번 방"} />} secondary={<ChatLastestStatus message={"1번방 입니다."}/>} />
           </ListItemButton>
-      );
-    })};
-  </List>
+
+          <ListItemButton onClick={() => joinChat("2")}>
+            <ListItemAvatar>
+              <Avatar>
+                <ImageIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary={<ChatTitle id={"2번 방"} />} secondary={<ChatLastestStatus message={"2번방 입니다."}/>} />
+          </ListItemButton>
+    </List>
+
   )
-  }*/
+};
+
+export default ChatList;

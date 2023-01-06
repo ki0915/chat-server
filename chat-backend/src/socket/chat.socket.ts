@@ -3,9 +3,11 @@ import { ChatEmitEvent, getSocket } from "../config/websocket";
 import Message from "../model/message.model";
 
 type ReceiveMessageType = {
-  chatId: number;
-  senderId: number;
+  chatId: string;
+  senderId: string;
   message: string;
+  roomId: number;
+  addressId: string;
 };
 
 type ReadMessageType = {
@@ -14,9 +16,11 @@ type ReadMessageType = {
 };
 
 export const receiveMessage = async (received: ReceiveMessageType) => {
-  const { chatId, senderId, message } = received;
+  const { addressId, roomId, chatId, senderId, message } = received;
   const newMessage = await Message.create({
     senderId,
+    roomId,
+    addressId,
     chatId,
     message,
     isRead: false,
@@ -27,6 +31,7 @@ export const receiveMessage = async (received: ReceiveMessageType) => {
   namespace.to(`chat-${chatId}`).emit(ChatEmitEvent.RECEIVE_MESSAGE, {
     chatId,
     senderId,
+    addressId,
     id: newMessage.id,
     message,
     isRead: false,

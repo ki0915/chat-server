@@ -1,9 +1,9 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import axios from "axios";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useNavigate } from "react-router";
+
 
 const SignUp = (): JSX.Element => {
 
@@ -21,26 +21,25 @@ const SignUp = (): JSX.Element => {
     };
 
     const addUser = async () => {
+      window.location.href = "/Login";
       try {
         await axios.post("http://localhost:8080/users/add", { id: id, password: pass });
-        alert("회원 가입 성공");
-        window.location.reload();
-        window.location.href = '/Login';
-        alert("1");
+        window.location.href = "/Login";
     }catch (e) {
         if (axios.isAxiosError(e) && e.response) {
+          window.location.href = "/Login";
           const { data } = e.response;
           if (data) {
             alert(data.message);
           }
         }
       }
+      window.location.href = "/Login";
     };
 
-    
-    
 
       return (
+        <>
         <Form>
           <Form.Group className="mb-3" controlId="formBasicId">
             <Form.Label>ID</Form.Label>
@@ -54,10 +53,10 @@ const SignUp = (): JSX.Element => {
           <Form.Group className="mb-3" controlId="formBasicCheckbox">
             <Form.Check type="checkbox" label="Check me out" />
           </Form.Group>
-          <Button variant="primary" type="submit" onClick={() => addUser()}> 
-            Sign up
+          <Button variant="primary" type="submit" onClick={() => addUser()}> Sign up(오류 시 기본 url + /Login)
           </Button>
         </Form>
+        </>
       );
 };
 

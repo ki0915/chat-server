@@ -10,33 +10,34 @@ import { ChangeEvent, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { websocketContext } from "../../../config/WebSocketProvider";
 
-/*
+
 type ChatMessageType = {
-  id: number;
+  id: string;
   time: Date;
   message: string;
   isMe: boolean;
 };
 
 type ChatDetailType = {
-  chatId: number;
+  myId: string;
+  chatId: string;
 };
 
 type ReceiveMessageType = {
-  chatId: number;
-  senderId: number;
-  id: number;
+  chatId: string;
+  senderId: string;
+  id: string;
   message: string;
   isRead: boolean;
   time: Date;
 };
 
 const ChatDetail = (props: ChatDetailType): JSX.Element => {
-  const { chatId } = props;
+  const { chatId, myId } = props;
+  const [chatMessages, setChatMessage] = useState<ChatMessageType[]>([]);
   const [message, setMessage] = useState("");
   const [newMessage, setNewMessage] = useState<ChatMessageType>();
   const ws = useContext(websocketContext);
-
   const changeMessage = (event: ChangeEvent<HTMLInputElement>) => {
     const inputText = event.currentTarget.value;
     setMessage(inputText);
@@ -45,18 +46,19 @@ const ChatDetail = (props: ChatDetailType): JSX.Element => {
   const sendMessage = () => {
     console.log(ws.current);
     ws.current.emit("sendMessage", {
-      chatId,
-      senderId: 1,
+      roomId: chatId,
+      senderId: myId,
       message,
     });
   };
 
   const loadMessage = async () => {
+
     const { data } = await axios.get<ChatMessageType[]>(
-      `http://localhost:5000/chats/${chatId}/messages`,
+      `http://localhost:8080/chats/${chatId}/messages`,
       {
         params: {
-          userId: 1,
+          senderId: myId,
         },
       }
     );
@@ -65,7 +67,7 @@ const ChatDetail = (props: ChatDetailType): JSX.Element => {
 
   const receiveMessage = (recieved: ReceiveMessageType) => {
     const { id, time, message, senderId } = recieved;
-    const isMe = senderId === 1;
+    const isMe = senderId === "1";
     const chatMessage: ChatMessageType = {
       id,
       isMe,
@@ -82,7 +84,7 @@ const ChatDetail = (props: ChatDetailType): JSX.Element => {
     ws.current.on("receiveMessage", (data: ReceiveMessageType) => {
       receiveMessage(data);
     });
-  }, []);
+  }, [changeMessage]);
 
   useEffect(() => {
     if (newMessage) {
@@ -91,6 +93,7 @@ const ChatDetail = (props: ChatDetailType): JSX.Element => {
   }, [newMessage]);
 
   return (
+    
     <Box
       sx={{
         display: "flex",
@@ -99,11 +102,21 @@ const ChatDetail = (props: ChatDetailType): JSX.Element => {
         height: "calc(100vh - 80px)",
       }}
     >
+     방 번호: {chatId}
+     <br/>
+     참여한 사람들: 
+    {chatMessages.map((People, key) => {
+        return (
+          <span key={key}>{People.id}</span>
+        )
+    })}
+    
+
       <Stack
         spacing={1}
         sx={{
-          overflowY: "scroll", // y 축이 넘어가면 어떻게 할거냐? 스크롤
-          overflowX: "hidden", // x 축이 넘어가면 어떻게 할거냐? 숨겨라
+          overflowY: "scroll", 
+          overflowX: "hidden", 
           height: "calc(100vh - 160px)",
         }}
       >
@@ -121,14 +134,14 @@ const ChatDetail = (props: ChatDetailType): JSX.Element => {
                 >
                   <Box>
                     <Typography variant="caption">
-                      {Message.time.toLocaleString()}
+                      {Message.id.toLocaleString()}
                     </Typography>
                     <Paper
                       elevation={1}
                       sx={{
                         display: "inline-block",
                         padding: "10px",
-                        maxWidth: "60%", // 최대 크기
+                        maxWidth: "60%", 
                         backgroundColor: "#fff712",
                         borderRadius: "20px",
                       }}
@@ -136,7 +149,6 @@ const ChatDetail = (props: ChatDetailType): JSX.Element => {
                       <Typography variant="body2">
                         <span
                           dangerouslySetInnerHTML={{
-                            // 위험한 html이 있어도 그대로 출력해라
                             __html: Message.message,
                           }}
                         ></span>
@@ -173,7 +185,7 @@ const ChatDetail = (props: ChatDetailType): JSX.Element => {
                       </Typography>
                     </Paper>
                     <Typography variant="caption">
-                      {Message.time.toLocaleString()}
+                      {Message.id.toLocaleString()}
                     </Typography>
                   </Box>
                 </Box>
@@ -189,16 +201,16 @@ const ChatDetail = (props: ChatDetailType): JSX.Element => {
           display: "flex",
           justifyContent: "space-between",
           position: "fixed",
-          bottom: "80px",
+          bottom: "0px",
           left: 0,
           right: 0,
         }}
       >
         <Box sx={{ width: "85%" }}>
-          <TextField fullWidth />
+          <TextField fullWidth onChange={changeMessage}/>
         </Box>
         <Box sx={{ width: "15%", p: 1 }}>
-          <Button variant="contained" color="primary" fullWidth>
+          <Button variant="contained" type="submit" color="primary" fullWidth onClick={sendMessage} >
             전송
           </Button>
         </Box>
@@ -208,4 +220,3 @@ const ChatDetail = (props: ChatDetailType): JSX.Element => {
 };
 
 export default ChatDetail;
-*/

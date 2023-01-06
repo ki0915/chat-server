@@ -13,10 +13,6 @@ import {
   } from "@mui/material";
   import ImageIcon from "@mui/icons-material/Image";
   import { ChangeEvent, useState, useEffect, MouseEvent } from "react";
-  import PersonAddIcon from "@mui/icons-material/PersonAdd";
-  import { Grid } from "@mui/material";
-  import { IconButton } from "@mui/material";
-  import Modal from "@mui/material/Modal";
   import * as React from "react";
   import axios from "axios";
   import AddIcon from '@mui/icons-material/Add';
@@ -47,9 +43,8 @@ import {
 
     const addFriend = async (id: string) => {
         try {
-            alert(myId);
             setfriednAddId(id);
-            await axios.post("http://localhost:8080/friends", { userId: myId, friends: friednAddId});
+            await axios.post("http://localhost:8080/friends", { userId: myId, friend: id});
         } catch (e) {
           if (axios.isAxiosError(e) && e.response) {
             const { data } = e.response;

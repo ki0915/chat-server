@@ -5,7 +5,7 @@ const websocketContext = createContext<any>(null);
 
 const initialize = ({ children }: { children: React.ReactNode }) => {
   const  ref = useRef<Socket | null>(null);
-  const ws = websocket("ws://localhost:6000/chats");
+  const ws = websocket("ws://localhost:8080/chats");
 
   if (!ref.current) {
     ws.on("connect", () => {

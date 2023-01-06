@@ -6,13 +6,17 @@ import {
   Model,
   PrimaryKey,
   Table,
+  DataType,
 } from "sequelize-typescript";
 import User from "./user.model";
 
 @Table
 export default class Friend extends Model {
   @PrimaryKey
-  @Column
+  @AutoIncrement
+  @Column(DataType.BIGINT)
+  id: bigint;
+
   @ForeignKey(() => User)
   userId: string;
 
@@ -20,5 +24,5 @@ export default class Friend extends Model {
   friendId: string;
 
   @BelongsTo(() => User, "friendId")
-  frienduser: User;
+  friendUser: User;
 }

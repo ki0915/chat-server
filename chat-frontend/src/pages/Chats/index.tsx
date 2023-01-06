@@ -1,25 +1,20 @@
-
 import * as React from "react";
 import { Container } from "@mui/material";
-import { useEffect, useState } from "react";
+import ChatDetailUser from "./components/ChatDetailFriend";
 
 type ChatType = {
-  chatId: number | null;
+  myId: string | null;
+  chatId: string | null;
 }
 
 const Chats = (props: ChatType): JSX.Element => {
-  const { chatId } = props;
-  const [selectedChat,setSelectedChat] = useState<number | null>(null);
+  const { myId, chatId } = props;
 
-  const joinChat = (chatId: number) => {
-    setSelectedChat(chatId);
-  };
-
-  useEffect(() => {
-    setSelectedChat(chatId);
-  }, [chatId]);
-
-  return ( <></>);
+  return (
+      <Container>
+        <ChatDetailUser chatId={chatId} myId={myId}/>
+    </Container>
+    );
 };
 
 export default Chats;

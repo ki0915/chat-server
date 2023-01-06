@@ -4,21 +4,19 @@ import { useState } from "react";
 
 
 type titleType = {
-  name: string;
-  date: Date;
+  id: string;
 }
 
 
 const ChatTitle = (props: titleType): JSX.Element => {
 
-  const { name, date } = props;
+  const { id } = props;
 
 
   return (
 
     <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-      <Typography>{name}</Typography>
-      <Typography>{date.toLocaleDateString()}</Typography>
+      <Typography>{id}</Typography>
     </Box>
   );
 };

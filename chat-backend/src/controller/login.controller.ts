@@ -3,7 +3,6 @@ import User from "../model/user.model";
 
 
 const router = express.Router();
-let sessionId;
 
 router.post("/", async (req, res) => {
     const id = req.body.id;
@@ -23,8 +22,8 @@ router.post("/", async (req, res) => {
       });
 
       if (existUser) {
-          return res.status(200).json();
-    }
+        return res.status(200).json();
+      }
    
     else if (!existUser) {
       return res.status(400).json();
