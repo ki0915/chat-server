@@ -21,9 +21,8 @@ const SignUp = (): JSX.Element => {
     };
 
     const addUser = async () => {
-      window.location.href = "/Login";
       try {
-        await axios.post("http://localhost:8080/users/add", { id: id, password: pass });
+        await axios.post("http://52.255.186.26:8080/users/add", { id: id, password: pass });
         window.location.href = "/Login";
     }catch (e) {
         if (axios.isAxiosError(e) && e.response) {

@@ -54,7 +54,7 @@ import {
   
     const loadMessage = async () => {
       const { data } = await axios.get<ChatMessageType[]>(
-        `http://localhost:8080/chats//friends/${chatId}/messages`,
+        `http://52.255.186.26:8080/chats/friends/${chatId}/messages`,
         {
           params: {
             userId: myId,

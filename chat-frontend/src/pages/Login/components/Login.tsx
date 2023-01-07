@@ -3,7 +3,6 @@ import axios from "axios";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import queryString from "query-string";
 
 const Login = (): JSX.Element => {
     const [id, setId] = useState<string>();
@@ -22,7 +21,7 @@ const Login = (): JSX.Element => {
     const addUser = async () => {
   
       try {
-        await axios.post("http://localhost:8080/login", { id: id, password: pass });
+        await axios.post("http://52.255.186.26:8080/login", { id: id, password: pass });
         window.location.href = '/Main?id=' + id;
      }catch (e) {
         if (axios.isAxiosError(e) && e.response) {

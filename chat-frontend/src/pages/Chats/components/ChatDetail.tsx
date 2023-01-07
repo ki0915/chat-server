@@ -55,7 +55,7 @@ const ChatDetail = (props: ChatDetailType): JSX.Element => {
   const loadMessage = async () => {
 
     const { data } = await axios.get<ChatMessageType[]>(
-      `http://localhost:8080/chats/${chatId}/messages`,
+      `http://52.255.186.26:8080/chats/${chatId}/messages`,
       {
         params: {
           senderId: myId,

@@ -1,7 +1,5 @@
 import React, { ChangeEvent, useState } from "react";
-import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -9,7 +7,6 @@ import { Tabs, Paper, Tab, Box } from "@mui/material";
 import User from "../User/User";
 import queryString from "query-string";
 import Friend from "../Friends/Friend";
-import { Link } from "react-router-dom";
 import Chats from "../Chats";
 import Room from "../Chats/room";
 
